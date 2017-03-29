@@ -4,8 +4,9 @@ import org.junit.*;
 
 public class StringUtilsTest {
 	@Test
-	public void reverseStringTest(String s)
+	public void reverseStringTest()
 	{
+			
 			Assert.assertEquals("RUOJNOB",StringUtils.reverseString("BONJOUR"));
 		
 	}
