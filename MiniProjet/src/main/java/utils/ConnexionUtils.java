@@ -28,14 +28,28 @@ public class ConnexionUtils {
 		Connection con=null;
 		try 
         {
+			con=getConnexion(URLFAC);
+        } 
+        catch (SQLException ex) 
+        {
+        	con=getConnexion(URLDIST);
+        } 
+		
+		return con;
+	}
+	public static Connection getConnexion(String url) throws SQLException
+	{
+		Connection con=null;
+		try 
+        {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-            con = DriverManager.getConnection(URLFAC, LOGIN, PASS);
+            con = DriverManager.getConnection(url, LOGIN, PASS);
         } 
         catch (SQLException ex) 
         {
             try 
             {
-                con = DriverManager.getConnection(URLDIST, LOGIN, PASS);
+                con = DriverManager.getConnection(url, LOGIN, PASS);
             } 
             catch (SQLException ex1) 
             {
@@ -46,12 +60,6 @@ public class ConnexionUtils {
         {
             Logger.getLogger(ConnexionUtils.class.getSimpleName()).log(Level.SEVERE, null, ex);
         }
-		return con;
-	}
-	private static Connection getConnexion(String url) throws SQLException
-	{
-		Connection con=null;
-		
 		return con;
 	}
 }
