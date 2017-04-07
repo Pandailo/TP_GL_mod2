@@ -1,0 +1,80 @@
+model Personnes --Descriptiton du modèle
+enum Sexe {Homme,Femme} -- Description d'un type énuméré
+
+class Personne		-- Description classe Personne
+attributes
+	nom : String
+	age : Integer
+	sexe : Sexe
+operations
+	anniversaire()
+	getConjoint() : Personne =
+		if not(femme.isUndefined())
+		then femme
+		else mari
+		endif
+	estMarie() : Boolean =
+		not(getConjoint().isUndefined())
+end
+
+class Entreprise	-- Description classe entreprise
+attributes
+	nom : String
+	budget : Integer
+	salaireEmploye : Integer
+operations
+	payerEmployes()
+	embaucher(p : Personne)
+end
+
+class Compte
+attributes
+	solde : Integer
+operations
+	debiter (somme : Integer)
+	crediter (somme : Integer)
+	getSolde() : Integer
+end
+
+--Associations
+
+association ParentsEnfants between
+	Personne[0..2] role parents
+	Personne[*] role enfants
+end
+association Mariage between
+	Personne[0..1] role mari
+	Personne[0..1] role femme
+end
+association CompteBancaire between
+	Personne[1] role employes
+	Compte[*] role compte
+end
+association Emploi between
+	Personne[*] role employes
+	Entreprise[0..1] role employeur
+end
+association Paie between
+	Compte[*] role comptes
+	Entreprise[0..1] role employeur
+end
+-- Description des contraintes
+constraints
+context Personne inv pasSonEnfant:
+enfants -> excludes(self)
+
+context Personne inv pasSonParent:
+parents -> excludes(self)
+
+context Personne inv ageMariage:
+self.estMarie() implies self.age >=18
+
+context Personne::anniversaire()
+post plusVieux: self.age = self.age@pre +1	
+
+context Compte::debiter(somme:Integer)
+	pre sommePositive : somme > 0
+	post debiterCorrect : self.solde = self.solde@pre-somme
+
+context Compte::getSolde() : Integer
+	post soldeCorrect: result = solde

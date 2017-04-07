@@ -1,0 +1,31 @@
+model Personne_TP1
+
+enum Sexe {Homme,Femme}
+class Personne
+	attributes
+		age : Integer
+		majeur : Boolean
+		marie : Boolean
+		sexe : Sexe
+	operations
+		getAge() : Integer 
+		setAge(a : Integer)
+		NbGarcons() : Integer
+		NbFilles() : Integer
+end
+
+association ParentsEnfants between
+	Personne[2] role parent
+	Personne[*] role enfant
+end
+constraints
+
+context Personne inv ParentEnfants :
+	parent -> forAll (p:Personne |p<>self) 
+	and parent-> forAll (p:Personne | p.age > self.age) and parent -> size() <= 2 
+
+context Personne inv Mariage : 
+	marie implies majeur
+
+context Personne::NbFilles():Integer
+	post : result = enfant -> select (p:Personne | p.sexe = #Femme-> size())
