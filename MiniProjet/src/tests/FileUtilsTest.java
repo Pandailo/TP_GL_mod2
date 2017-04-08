@@ -136,10 +136,9 @@ public class FileUtilsTest {
 	{
 		log.info("Execution testWriteNullInFile() ");
 		exception.expect(FileException.class);
-		String t=null;
 		FileUtils fu=FileUtils.getInstance();
 		try{
-			FileUtils.writeInFile("files/testW.txt", t);
+			FileUtils.writeInFile("files/testW.txt", null);
 		}
 		catch (FileException e)
 		{
