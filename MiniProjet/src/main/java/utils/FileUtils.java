@@ -7,10 +7,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Logger;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 
 import main.java.exceptions.FileException;
+import tests.FileUtilsTest;
 
 public class FileUtils {
 
@@ -18,7 +20,8 @@ public class FileUtils {
 		 * Utils style Singleton
 		 * Permet l'�criture/lecture d'un fichier. <br />
 		 */
-		
+		private static Logger log = Logger.getLogger(FileUtilsTest.class.getSimpleName());
+
 		private FileUtils(){
 			
 		}
@@ -32,16 +35,12 @@ public class FileUtils {
 			return FileUtilsHolder.instance;
 		}
 		
-		private static void writeInFile(String nomFich,String entree) throws FileException
+		public static void writeInFile(String nomFich,String entree) throws FileException
 		{
 			/*
 			 * Ecrit et créé un fichier f qui contient la chaine entree
 			 */
 			File fich=new File(nomFich);
-			if(!fich.exists())
-			{
-				throw new FileException("le fichier n'existe pas");
-			}
 			try
 			{
 				fich.createNewFile();
@@ -51,13 +50,13 @@ public class FileUtils {
 			} 
 			catch (Exception e) 
 			{
-				//log.severe("IO exception, ecriture / creation de fichier.")
+				log.severe("IO exception, ecriture / creation de fichier.");
 			}
 			
 		}
 		
 		
-		private static String readFromFile(File fich)
+		public static String readFromFile(File fich)
 		{
 			/*
 			 * Lit dans un fichier f, et retourne la globalité du fichier sous forme de chaine

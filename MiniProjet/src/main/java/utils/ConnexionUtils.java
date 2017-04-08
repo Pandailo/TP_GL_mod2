@@ -1,6 +1,9 @@
 package main.java.utils;
 import java.util.*;
 import com.sun.rowset.*;
+
+import tests.FileUtilsTest;
+
 import java.sql.*;
 import java.util.logging.*;
 import javax.sql.rowset.*;
@@ -10,6 +13,8 @@ public class ConnexionUtils {
 	protected static final String PASS ="yv965015";
 	protected static final String URLFAC ="jdbc:oracle:thin:@butor:1521:ensb2016";
 	protected static final String URLDIST="jdbc:oracle:thin:@ufrsciencestech.u-bourgogne.fr:25561:ensb2016";
+	private static Logger log = Logger.getLogger(FileUtilsTest.class.getSimpleName());
+
 	
 	private ConnexionUtils()
 	{
