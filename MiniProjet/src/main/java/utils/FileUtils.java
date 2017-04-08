@@ -6,8 +6,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.logging.Logger;
+
+import org.junit.Assert;
+
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 
@@ -43,10 +47,17 @@ public class FileUtils {
 			File fich=new File(nomFich);
 			try
 			{
-				fich.createNewFile();
-				FileWriter fw=new FileWriter(fich);
-				fw.write(entree);  // écrire une ligne dans le fichier fich.txt
-				fw.close(); // ferme le fichier à la fin des traitements
+				if(entree!=null)
+				{
+					fich.createNewFile();
+					FileWriter fw=new FileWriter(fich);
+					fw.write(entree);  // écrire une ligne dans le fichier fich.txt
+					fw.close(); // ferme le fichier à la fin des traitements
+				}
+				else
+				{
+					throw new FileException("Tentative de remplissage avec null");
+				}
 			} 
 			catch (Exception e) 
 			{
@@ -56,38 +67,34 @@ public class FileUtils {
 		}
 		
 		
-		public static String readFromFile(File fich)
+		public static String readFromFile(String fich) throws FileNotFoundException
 		{
 			/*
 			 * Lit dans un fichier f, et retourne la globalité du fichier sous forme de chaine
 			 */
 			String s="";/*TODO A CHANGER*/
-		    FileInputStream fis = null;
-		    BufferedInputStream bis = null;
-		    BufferedReader dis = null;
-		 
-		    try 
-		    {
-		    	fis = new FileInputStream(fich);
-		 
-		    	bis = new BufferedInputStream(fis);
-		    	dis = new BufferedReader(new InputStreamReader(bis));
-			 
-		    	while (dis.readLine() != null) {
-			 
-			        s+=""+(dis.readLine());
-		      }
-		 
-		      // fermeture de tous les flux ouverts
-		      fis.close();
-		      bis.close();
-		      dis.close();
-		 
-		    } catch (FileNotFoundException e) {
-		      e.printStackTrace();
-		    } catch (IOException e) {
-		      e.printStackTrace();
-		    }
+			try{
+					InputStream ips=new FileInputStream(fich); 
+					InputStreamReader ipsr=new InputStreamReader(ips);
+					BufferedReader br=new BufferedReader(ipsr);
+					String ligne;
+					while ((ligne=br.readLine())!=null){
+						s+=ligne+"\n";
+					}
+					br.close(); 
+					ips.close();
+					ipsr.close();
+			}
+			catch(FileNotFoundException e)
+			{
+				log.severe(e.getMessage());
+				throw new FileNotFoundException("Fichier inconnu");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			s = s.substring(0,s.length()-1);
 			return s;
 		}
 
