@@ -37,7 +37,7 @@ public class ConnexionUtils {
 		
 		return con;
 	}
-	private static Connection getConnexion(String url) throws SQLException
+	private0 static Connection getConnexion(String url) throws SQLException
 	{
 		Connection con=null;
 		try 
