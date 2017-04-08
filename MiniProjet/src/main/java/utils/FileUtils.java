@@ -16,6 +16,7 @@ public class FileUtils {
 
 		/**
 		 * Utils style Singleton
+		 * Permet l'écriture/lecture d'un fichier. <br />
 		 */
 		
 		private FileUtils(){
