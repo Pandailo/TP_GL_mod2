@@ -1,0 +1,38 @@
+model Note
+class Department
+attributes 
+	name : String
+	location : String 
+	budget : Integer
+end
+class Employee
+attributes
+	name : String
+	salary : Integer
+end
+class Projet
+attributes
+	name : String
+	budget : Integer
+end
+association ED between
+	Employee[1..*] role employee
+	Department[1..*] role department
+end
+association EP between
+	Employee[1..*] role employee
+	Projet[*] role worksOn
+end
+association DP between
+	Department[1] role department
+	Projet[*] role controls
+end
+constraints
+context Department inv verifNb:
+	self.employee->size()>=self.controls->size()
+--context Employee inv verifSalaire:
+--	select(e:Employee|(self.worksOn->size()>e.worksOn->size()) implies (self.salary>e.salary))
+context Projet inv verifBudget:
+	self.budget<self.department.budget
+context Employee inv verifTravail:
+	self.worksOn->forAll(p:Projet|p.department)=self.department)
