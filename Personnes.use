@@ -6,6 +6,7 @@ attributes
 	nom : String
 	age : Integer
 	sexe : Sexe
+	grandParent : Boolean
 operations
 	anniversaire()
 	getConjoint() : Personne =
@@ -36,6 +37,18 @@ operations
 	getSolde() : Integer
 end
 
+class Homme < Personne
+attributes
+	pere : Boolean
+	grandPere : Boolean
+end
+
+class Femme < Personne
+attributes
+	mere : Boolean
+	grandMere : Boolean
+	mereFilles: Boolean
+end
 --Associations
 
 association ParentsEnfants between
@@ -58,6 +71,15 @@ association Paie between
 	Compte[*] role comptes
 	Entreprise[0..1] role employeur
 end
+association Soeur between
+	Personne[*] role frereSoeur
+	Femme[*] role soeur
+end
+
+association Frere between
+	Personne[*] role frereSoeur
+	Homme[*] role frere
+end
 -- Description des contraintes
 constraints
 context Personne inv pasSonEnfant:
@@ -78,3 +100,18 @@ context Compte::debiter(somme:Integer)
 
 context Compte::getSolde() : Integer
 	post soldeCorrect: result = solde
+
+context Personne inv pasSoeurFrere:
+	frere -> excludes(self) and soeur -> excludes(self)
+context Homme inv verifGP :
+	grandPere=(enfants.enfants->size()>=1)
+context Femme inv verifGM :
+	grandMere=(enfants.enfants->size()>=1)
+context Personne inv verifGP : 
+	grandParent=(enfants.enfants->size()>=1)
+context Homme inv vertifGrandPere :
+	self.grandParent = self.grandPere
+context Femme inv vertifGrandMere :
+	self.grandParent = self.grandMere
+context Femme inv verifMereFille :
+	self.mereFilles = enfants->forAll (p:Personne |p.sexe:=#Femme)
