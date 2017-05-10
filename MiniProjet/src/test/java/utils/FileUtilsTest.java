@@ -111,7 +111,7 @@ public class FileUtilsTest {
 		}
 		Assert.assertEquals(resultatexpected, resultat);
 		if (resultatexpected.equals(resultat))
-			log.info("Test writeInFile r�ussi avec une utilisation normale");
+			log.info("Test writeInFile reussi avec une utilisation normale");
 
 	}
 

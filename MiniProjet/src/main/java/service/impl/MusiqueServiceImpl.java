@@ -77,11 +77,21 @@ public class MusiqueServiceImpl implements MusiqueService {
 		String titre="";
 		String artiste="";
 		int duree=0;
+		String[][] content;
 		Connection con=null;
 		try {
 			con=ConnexionUtils.getInstance().getConnexion();
 			OraclePreparedStatement st=(OraclePreparedStatement)con.prepareStatement("INSERT INTO PGL_musique VALUES(0,?,?,?)");
-		} catch (SQLException e) {
+			content=formerTable(contenu);
+			for(int i=0;i<content.length;i++)
+			{
+				st.setString(1,content[i][0]);
+				st.setInt(2, Integer.parseInt(content[i][1]));
+				st.setString(3, content[i][2]);
+				st.execute();
+			}
+			con.commit();
+		} catch (SQLException | WrongFormatException e) {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
 		}
