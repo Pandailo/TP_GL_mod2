@@ -3,4 +3,7 @@
 <fullyQualifiedTypeName name="main.java.exceptions.NoRowSelectedException"/>
 <fullyQualifiedTypeName name="main.java.exceptions.WrongFormatException"/>
 <fullyQualifiedTypeName name="oracle.jdbc.OraclePreparedStatement"/>
+<fullyQualifiedTypeName name="org.junit.Rule"/>
+<fullyQualifiedTypeName name="org.junit.Test"/>
+<fullyQualifiedTypeName name="org.junit.rules.ExpectedException"/>
 </qualifiedTypeNameHistroy>
