@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import main.java.dao.MusiqueDao;
 import main.java.exceptions.FileException;
 import main.java.exceptions.NoRowSelectedException;
 import main.java.exceptions.WrongFormatException;
@@ -21,14 +22,10 @@ public class MusiqueServiceImpl implements MusiqueService {
 	 * Utilise la classe fileUtils
 	 */
 	@Override
-	public String lireFichier(String path) {
+	public String lireFichier(String path) throws FileNotFoundException {
 		String s = "";
 		FileUtils fu = FileUtils.getInstance();
-		try {
-			s = fu.readFromFile(path);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		s = fu.readFromFile(path);
 		return s;
 	}
 
@@ -38,14 +35,9 @@ public class MusiqueServiceImpl implements MusiqueService {
 	 *	Ecrit un contenu dans un fichier.
 	 */
 	@Override
-	public void ecrire(String contenu, String path) {
+	public void ecrire(String path,String contenu) throws FileException {
 		FileUtils fu = FileUtils.getInstance();
-		try {
-			fu.writeInFile(contenu, path);
-		} catch (FileException e) {
-			// TODO Bloc catch généré automatiquement
-			e.printStackTrace();
-		}
+		fu.writeInFile(path, contenu);
 
 	}
 	/*
@@ -64,11 +56,8 @@ public class MusiqueServiceImpl implements MusiqueService {
 		String[] s = new String[3];
 		String retour = "";
 		try {
-			Connection con = ConnexionUtils.getInstance().getConnexion();
-			OraclePreparedStatement st = (OraclePreparedStatement) con
-					.prepareStatement("SELECT titre,duree,artiste FROM PGL_musique WHERE id=?");
-			st.setInt(1, id);
-			OracleResultSet rs = (OracleResultSet) st.executeQuery();
+			MusiqueDao m=new MusiqueDao();
+			OracleResultSet rs=m.recuperer(id,"PGL_Musique");
 			if(rs.next())
 			{
 				titre = rs.getString(1);
@@ -99,25 +88,11 @@ public class MusiqueServiceImpl implements MusiqueService {
 	 */
 	@Override
 	public void sauvegarder(String contenu) {
-		String titre="";
-		String artiste="";
-		int duree=0;
-		String[][] content;
-		Connection con=null;
+		MusiqueDao d=new MusiqueDao();
 		try {
-			con=ConnexionUtils.getInstance().getConnexion();
-			OraclePreparedStatement st=(OraclePreparedStatement)con.prepareStatement("INSERT INTO PGL_musique VALUES(0,?,?,?)");
-			content=formerTable(contenu);
-			for(int i=0;i<content.length;i++)
-			{
-				st.setString(1,content[i][0]);
-				st.setInt(2, Integer.parseInt(content[i][1]));
-				st.setString(3, content[i][2]);
-				st.execute();
-			}
-			con.commit();
+			String[][] content=formerTable(contenu);
+			d.enregistrer(content,"PGL_Musique");
 		} catch (SQLException | WrongFormatException e) {
-			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
 		}
 			
@@ -132,10 +107,10 @@ public class MusiqueServiceImpl implements MusiqueService {
 		if(base.length%3==0)
 		{
 			String r = "";
-			for (int i = 0; i < base.length; i++) {
+			for (int i = 0; i < base.length-1; i++) {
 				r += base[i] + ",";
 			}
-			r += "\n";
+			r +=base[base.length-1]+ "\n";
 			return r;
 		}
 		else
@@ -157,12 +132,13 @@ public class MusiqueServiceImpl implements MusiqueService {
 			int cptj=0;
 			for(int i=0;i<split.length;i++)
 			{
-				if(i%3==0)
+				if(i%3==0&&i!=0)
 				{
 					cpti++;
 					cptj=0;
 				}
 				retour[cpti][cptj]=split[i];
+				cptj++;
 			}
 			return retour;
 		}

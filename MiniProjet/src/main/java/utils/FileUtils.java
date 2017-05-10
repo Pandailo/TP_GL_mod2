@@ -38,18 +38,23 @@ public class FileUtils {
 		/*
 		 * Ecrit et créé un fichier f qui contient la chaine entree
 		 */
-		File fich = new File(nomFich);
-		try {
-			if (entree != null) {
-				fich.createNewFile();
-				FileWriter fw = new FileWriter(fich);
-				fw.write(entree); // écrire une ligne dans le fichier fich.txt
-				fw.close(); // ferme le fichier à la fin des traitements
-			} else {
-				throw new FileException("Tentative de remplissage avec null");
+		if (entree == null||nomFich==null) 
+		{
+			throw new FileException("Tentative de remplissage avec null");
+			
+		}
+		 else {
+			try {
+					
+						File fich = new File(nomFich);
+						fich.createNewFile();
+						FileWriter fw = new FileWriter(fich);
+						fw.write(entree); // écrire une ligne dans le fichier fich.txt
+						fw.close(); // ferme le fichier à la fin des traitements
+			
+			} catch (Exception e) {
+				log.severe("IO exception, ecriture / creation de fichier.");
 			}
-		} catch (Exception e) {
-			log.severe("IO exception, ecriture / creation de fichier.");
 		}
 
 	}

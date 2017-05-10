@@ -125,12 +125,9 @@ public class FileUtilsTest {
 		String fich = "fichierquinexistepas.abc";
 		FileUtils fu = FileUtils.getInstance();
 		String resultat = "";
-		try {
 			resultat = fu.readFromFile(fich);
-		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			throw new FileNotFoundException("Reussite");
-		}
+
 
 	}
 
