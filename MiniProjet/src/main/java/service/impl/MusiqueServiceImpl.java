@@ -65,7 +65,7 @@ public class MusiqueServiceImpl implements MusiqueService {
 			else 
 				throw new NoRowSelectedException("Aucune ligne séléctionnée");
 
-		} catch (SQLException e) {
+		} catch (SQLException | WrongFormatException e) {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
 		}
@@ -74,7 +74,19 @@ public class MusiqueServiceImpl implements MusiqueService {
 
 	@Override
 	public void sauvegarder(String contenu) {
-		// TODO Stub de la méthode généré automatiquement
+		String titre="";
+		String artiste="";
+		int duree=0;
+		Connection con=null;
+		try {
+			con=ConnexionUtils.getInstance().getConnexion();
+			OraclePreparedStatement st=(OraclePreparedStatement)con.prepareStatement("INSERT INTO PGL_musique VALUES(0,?,?,?)");
+		} catch (SQLException e) {
+			// TODO Bloc catch généré automatiquement
+			e.printStackTrace();
+		}
+			
+
 
 	}
 
