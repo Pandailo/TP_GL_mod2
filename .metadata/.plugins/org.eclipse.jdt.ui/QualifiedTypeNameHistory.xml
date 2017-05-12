@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="main.java.exceptions.NoRowSelectedException"/>
-<fullyQualifiedTypeName name="main.java.exceptions.WrongFormatException"/>
-<fullyQualifiedTypeName name="oracle.jdbc.OraclePreparedStatement"/>
 <fullyQualifiedTypeName name="org.junit.Rule"/>
-<fullyQualifiedTypeName name="org.junit.Test"/>
 <fullyQualifiedTypeName name="org.junit.rules.ExpectedException"/>
+<fullyQualifiedTypeName name="main.java.service.impl.MusiqueServiceImpl"/>
+<fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
+<fullyQualifiedTypeName name="main.java.utils.FileUtils"/>
+<fullyQualifiedTypeName name="main.java.exceptions.FileException"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="java.sql.SQLException"/>
+<fullyQualifiedTypeName name="org.junit.Test"/>
+<fullyQualifiedTypeName name="main.java.dao.MusiqueDao"/>
+<fullyQualifiedTypeName name="main.java.utils.ConnexionUtils"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="oracle.jdbc.OraclePreparedStatement"/>
+<fullyQualifiedTypeName name="oracle.jdbc.OracleResultSet"/>
+<fullyQualifiedTypeName name="org.junit.Assert"/>
+<fullyQualifiedTypeName name="main.java.facade.MusiqueFacadeImpl"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="main.java.exceptions.WrongFormatException"/>
+<fullyQualifiedTypeName name="java.sql.ResultSetMetaData"/>
 </qualifiedTypeNameHistroy>
