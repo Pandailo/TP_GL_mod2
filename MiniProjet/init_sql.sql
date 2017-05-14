@@ -14,3 +14,9 @@ BEGIN
 	END IF;
 END;
 /
+
+INSERT INTO PGL_Musique VALUES(0,'Down with the sickness',216,'Disturbed');
+INSERT INTO PGL_Musique VALUES(0,'Prayer of the refugee',217,'Rise Against');
+INSERT INTO PGL_Musique VALUES(0,'Superstition',267,'Stevie Wonder');
+INSERT INTO PGL_Musique VALUES(0,'Sweet Child O"Mine',299,'Guns N" Roses');
+INSERT INTO PGL_Musique VALUES(0,'Short Change Hero',237,'The Heavy');
